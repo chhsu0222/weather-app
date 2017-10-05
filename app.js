@@ -9,5 +9,9 @@ request({
     to an object for us
     */
 }, (error, response, body) => {
-    console.log(body);
+    console.log(JSON.stringify(body, undefined, 2));
+    /*
+    The body is an object because we set the json property "true"
+    The 3rd argument is the indentation
+    */
 });

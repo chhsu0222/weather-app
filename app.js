@@ -9,9 +9,13 @@ request({
     to an object for us
     */
 }, (error, response, body) => {
-    console.log(JSON.stringify(body, undefined, 2));
+    //console.log(JSON.stringify(body, undefined, 2));
     /*
     The body is an object because we set the json property "true"
     The 3rd argument is the indentation
     */
+    
+    console.log(`Address: ${body.results[0].formatted_address}`);
+    console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
+    console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
 });

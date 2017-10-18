@@ -4,7 +4,7 @@ var asyncAdd = (a, b) => {
             if (typeof a === 'number' && typeof b === 'number') {
                 resolve(a + b);
             } else {
-                reject('Argumenta must be numbers');
+                reject('Arguments must be numbers');
             }
         }, 1500);
     });
@@ -14,9 +14,15 @@ Anyone who happens to call AsyncAdd can add a 'then' call on to the
 return result to get that value.
 */
 
-asyncAdd(5, 7).then((res) => {
+asyncAdd(5, '7').then((res) => {
     console.log('Result:', res);
-}, (errorMessage) => {
+    return asyncAdd(res, 33);
+}).then((res) => {   // second 'then' is based of asyncAdd(res, 33);
+    console.log('Should be 45', res);
+}).catch((errorMessage) => {
+    /* only one argument (error handler) for catch method and
+    that's going to fire for all of our previous failures.
+    */
     console.log(errorMessage);
 });
 

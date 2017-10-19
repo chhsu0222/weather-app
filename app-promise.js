@@ -14,6 +14,12 @@ const argv = yargs
 .alias('help', 'h')
 .argv;
 
+if (argv.address === "") {
+    // default address
+    argv.address = '119, Xinxing St., Yancheng Dist., Kaohsiung City 803, Taiwan'; 
+    console.log('Default address.');
+} 
+
 var encodedAddress = encodeURIComponent(argv.address);
 var geocodeURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`;
 
@@ -24,6 +30,7 @@ axios.get(geocodeURL).then((response) => {
     
     var lat = response.data.results[0].geometry.location.lat;
     var lng = response.data.results[0].geometry.location.lng;
+    console.log(`Location: lat: ${lat}, lng: ${lng}`);
     var weatherUrl = `https://api.darksky.net/forecast/1a5e6c07f1fb77d34bdae5ba084e3168/${lat},${lng}`;
     console.log(response.data.results[0].formatted_address);
     
@@ -32,7 +39,8 @@ axios.get(geocodeURL).then((response) => {
 }).then((response) => {
     var temperature = response.data.currently.temperature;
     var apparentTemperature = response.data.currently.apparentTemperature;
-    console.log(`It's currently ${temperature}. It feels like ${apparentTemperature}.`);
+    var summary = response.data.currently.summary;
+    console.log(`It's ${summary.toLowerCase()}. It's currently ${temperature} F. It feels like ${apparentTemperature} F.`);
 }).catch((error) => {
     // handles all error above
     if (error.code === 'ENOTFOUND') {
